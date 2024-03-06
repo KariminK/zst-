@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZST++</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>ZST++</h1>
+      <p>C++ dokumentacja do kartkówki</p>
+    </header>
+    <main>
+      <section>
+        <h2>ifstream</h2>
+        <p>ifstream służy do odczytu danych plików</p>
+        <h3>Syntax:</h3>
+        <code>ifstream nazwa("nazwa_pliku");</code>
+      </section>
+      <section>
+        <h2>ofstream</h2>
+        <p>ofstream służy do zapisu danych do pliku</p>
+        <h3>Syntax:</h3>
+        <code>ofstream nazwa("nazwa_pliku");</code>
+      </section>
+      <section>
+        <h2>metoda .good()</h2>
+        <p>sprawdza, czy plik otworzył się poprawnie [zwraca typ bool]</p>
+        <h3>syntax:</h3>
+        <code>
+          ifstream plik("tekst.txt"); <br />
+          if(plik.good()){ <br />
+          // kod, który wykona się po poprawnym otworzeniu pliku <br />
+          }
+        </code>
+      </section>
+      <section>
+        <h2>Opcje ios do otwarcia pliku</h2>
+        <table>
+          <thead>
+            <th>Opcja</th>
+            <th>Opis</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ios::app</td>
+              <td>
+                Umieszcza wskaźnik na końcu pliku, dane mogą być zapisywane
+                tylko na końcu pliku
+              </td>
+            </tr>
+            <tr>
+              <td>ios::ate</td>
+              <td>Umieszcza wskaźnik na końcu pliku w chwili otwarcia pliku</td>
+            </tr>
+            <tr>
+              <td>ios::binary</td>
+              <td>Dane będą traktowane jako binarne, a nie jako tekstowe</td>
+            </tr>
+            <tr>
+              <td>ios::trunc</td>
+              <td>Plik będzie obcinany do 0 bajtów [tj dane będą usuwane]</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h2>Strumieniowy odczyt danych</h2>
+        <p>
+          Dane z ifstreama możemy odczytać tak jak dane z cin, jednak należy
+          pamiętać o tym, że dane będą odczytane do białego znaku (m.in. spacji,
+          tabulacji, nowej linii) analogicznie jak w cin.
+        </p>
+        <code>
+          ifstream plik("tekst.txt"); <br />
+          string str; <br />
+          plik >> str;
+        </code>
+      </section>
+      <section>
+        <h2>Odczyt danych za pomocą buforów</h2>
+        <p>
+          odczytując dane za pomocą buforów korzystamy z metody .read(), która
+          odczytuje daną ilość danych z pliku i wpisuje ją do bufora
+        </p>
+        <h3>Syntax</h3>
+        <code>
+          char bufor [100]; // bufor o wielkosci 100 znakow <br />
+          plik.read(bufor, 100); // odczytujemy 100 znakow do bufora
+        </code>
+        <h4>Ważne #1:</h4>
+        <p>
+          Bufor nie musi być zapełniony do końca danymi. Aby sprawdzić ile
+          danych mieści się w buforze używamy metody .gcount()
+        </p>
+        <code>
+          char bufor [100]; // bufor o wielkosci 100 znakow <br />
+          plik.read(bufor, 100); // odczytujemy tyle danych, ile się zmieści do
+          bufora <br />
+          cout << "Do bufora wczytano: " << plik.gcount() << " znakow";
+        </code>
+      </section>
+      <section>
+        <h2>funkcja getline()</h2>
+        <p>
+          Funkcja getline() służy do pobierania danych liniami (tj. jeden
+          getline pobierze nam dane do znaku nowej linii \n).
+        </p>
+        <h3>Syntax:</h3>
+        <code>
+          string str; <br />
+          getline(plik, str);
+        </code>
+
+        <h4>Ważne #1</h4>
+        <p>
+          getline() możemy także używać do pobierania danych z cin, w takim
+          wypadku w miejsce pliku podajemy cin
+        </p>
+        <code>
+          string str; <br />
+          getline(cin, str);
+        </code>
+        <h4>Ważne #2</h4>
+        <p>
+          funkcja getline() może przyjmować 3 argument, który będzie definiował
+          separator do którego będzie odczytywał dane
+        </p>
+        <code>
+          string str; <br />
+          getline(cin, str, ";"); // getline będzie odczytywał dane aż do
+          najbliższego średnika
+        </code>
+      </section>
+      <section>
+        <h2>Zapis danych za pomocą strumienia</h2>
+        <p>
+          Zapis danych za pomocą strumienia będzie odbywał się na podobnej
+          zasadzie co wyświetlanie danych w konsoli cout. Jedyną różnicą jest
+          to, że docelowym miejscem danych jest plik, a nie konsola
+        </p>
+        <h3>Syntax:</h3>
+        <code>
+          ofstream plik("tekst.txt"); <br />
+          plik << "Jakies dane";
+        </code>
+      </section>
+      <section>
+        <h2>Zapis danych za pomocą buforów</h2>
+        <p>
+          Zapis danych za pomocą buforów wymaga użycia .write(), które do
+          naszego otwartego pliku wstawia dane z podanego przez nas buforu
+        </p>
+        <code>
+          ofstream plik("tekst.txt"); <br />
+          string dane = "Przykładowe dane do zapisu do pliku."; <br />
+          plik.write(dane.c_str(), strlen(dane));
+        </code>
+      </section>
+      <section>
+        <h2>seekg() i seekp()</h2>
+        <p>
+          Obie te funkcje służą do ustawiania pozycji wskaźnika w pliku. <br />
+          seekg działa dla funkcji odczytujących dane, <br />
+          seekp działa dla funkcji zapisujących dane
+        </p>
+        <h3>Syntax:</h3>
+        <code>
+          ifstream odczyt("plik.txt"); <br />
+          ofstream zapis("plik.txt"); <br />
+          odczyt.seekg(przesuniecie); <br />
+          odczyt.seekp(przesuniecie);
+        </code>
+        <h4>Ważne #1:</h4>
+        <p>
+          Możemy ustalić względem czego chcemy przesunąć wskaźnik, dodając 2
+          argument do funkcji:
+        </p>
+        <table>
+          <thead>
+            <th>Kierunek</th>
+            <th>Opis</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ios_base::beg</td>
+              <td>Przesunięcie względem początku pliku (domyślne)</td>
+            </tr>
+            <tr>
+              <td>ios_base::cur</td>
+              <td>Przesunięcie względem aktualnej pozycji wskaźnika</td>
+            </tr>
+            <tr>
+              <td>ios_base::end</td>
+              <td>Przesunięcie względem końca pliku</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h2>tellg() i tellp()</h2>
+        <p>
+          Obie funkcje zwracają aktualną pozycję wskaźnika w pliku. tellg()
+          działa dla odczytu danych, zaś tellp() działa dla zapisu danych
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
