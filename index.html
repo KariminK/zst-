@@ -129,7 +129,7 @@
         </p>
         <code>
           string str; <br />
-          getline(cin, str, ";"); // getline będzie odczytywał dane aż do
+          getline(cin, str, ';'); // getline będzie odczytywał dane aż do
           najbliższego średnika
         </code>
       </section>
@@ -170,7 +170,7 @@
           ifstream odczyt("plik.txt"); <br />
           ofstream zapis("plik.txt"); <br />
           odczyt.seekg(przesuniecie); <br />
-          odczyt.seekp(przesuniecie);
+          zapis.seekp(przesuniecie);
         </code>
         <h4>Ważne #1:</h4>
         <p>
@@ -203,6 +203,26 @@
         <p>
           Obie funkcje zwracają aktualną pozycję wskaźnika w pliku. tellg()
           działa dla odczytu danych, zaś tellp() działa dla zapisu danych
+        </p>
+      </section>
+      <section>
+        <h2>remove() i rename()</h2>
+        <p>
+          remove() usuwa plik, rename() zmienia nazwe pliku na inną. Obie
+          funkcje zwracają 0, jeżeli operacja się powiedzie, lub coś innego,
+          jeżeli się nie powiedzie.
+        </p>
+        <h3>Syntax:</h3>
+        <code>
+          remove("plik.txt"); // usuwa plik plik.txt (jeśli istnieje) <br />
+          rename("stara_nazwa_pliku", "nowa_nazwa_pliku"); // zmienia nazwe
+          pliku (jeśli istnieje)
+        </code>
+        <h4>Ważne #1:</h4>
+        <p>
+          Żeby wykonać operację zmiany nazwy i/lub usunięcia pliku, strumień do
+          tego pliku musi być zamknięty (tzn. plik musi być dostępny do
+          operacji)
         </p>
       </section>
     </main>
